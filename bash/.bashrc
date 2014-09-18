@@ -1,27 +1,21 @@
-#
 # ~/.bashrc
-#
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+eval $(ssh-agent)
+
 # environment variables
 export EDITOR="$(if [[ -n $DISPLAY ]]; then echo 'gedit'; else echo 'nano'; fi)"	# gedit, nano
 
-# pacman aliases (if desired, adapt for your favourite AUR helper)
-alias pac="sudo /usr/bin/pacman -S"		# default action	- install one or more packages
-alias pacu="sudo /usr/bin/pacman -Syu"		# '[u]pdate'		- upgrade all packages to their newest version
-alias pacr="sudo /usr/bin/pacman -Rns"		# '[r]emove'		- uninstall one or more packages
-alias pacs="/usr/bin/pacman -Ss"		# '[s]earch'		- search for a package using one or more keywords
-alias paci="/usr/bin/pacman -Si"		# '[i]nfo'		- show information about a package
-alias paclo="/usr/bin/pacman -Qdt"		# '[l]ist [o]rphans'	- list all packages which are orphaned
-alias pacc="sudo /usr/bin/pacman -Scc"		# '[c]lean cache'	- delete all not currently installed package files
-alias paclf="/usr/bin/pacman -Ql"		# '[l]ist [f]iles'	- list all files installed by a given package
-alias pacexpl="sudo /usr/bin/pacman -D --asexp"	# 'mark as [expl]icit'	- mark one or more packages as explicitly installed 
-alias pacimpl="sudo /usr/bin/pacman -D --asdep"	# 'mark as [impl]icit'	- mark one or more packages as non explicitly installed
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-# '[r]emove [o]rphans' - recursively remove ALL orphaned packages
-alias pacro="/usr/bin/pacman -Qtdq > /dev/null && sudo /usr/bin/pacman -Rns \$(/usr/bin/pacman -Qtdq | sed -e ':a;N;$!ba;s/\n/ /g')"
+if [ -f ~/.bash_aliases ]; then
+  . ~/.bash_aliases
+fi
 
 # Powerline
 if [ -f /usr/lib/python3.4/site-packages/powerline/bindings/bash/powerline.sh ]; then
@@ -31,5 +25,15 @@ if [ -f /usr/lib/python3.4/site-packages/powerline/bindings/bash/powerline.sh ];
 	source /usr/lib/python3.4/site-packages/powerline/bindings/bash/powerline.sh
 fi
 
-eval $(dircolors -b $HOME/.dircolors)
+# Enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+  alias ls='ls --color=auto'
+  #alias dir='dir --color=auto'
+  #alias vdir='vdir --color=auto'
+
+  alias grep='grep --color=auto'
+  alias fgrep='fgrep --color=auto'
+  alias egrep='egrep --color=auto'
+fi
 
