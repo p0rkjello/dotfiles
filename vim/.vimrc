@@ -22,7 +22,7 @@ set shiftround                  " use multiple of shiftwidth when indenting with
 set backspace=indent,eol,start  " allow backspacing over everything in insert mode
 set autoindent                  " always set autoindenting on
 set copyindent                  " copy the previous indentation on autoindenting
-set number                      " always show line numbers
+" set number                      " always show line numbers
 set showmatch                   " set show matching parenthesis
 set ignorecase                  " ignore case when searching
 set smartcase                   " ignore case if search pattern is all lowercase,
@@ -74,7 +74,6 @@ nnoremap <C-y> 2<C-y>
 set termencoding=utf-8
 set encoding=utf-8
 set lazyredraw                  " don't update the display while executing macros
-set laststatus=2                " tell VIM to always put a status line in, even
                                 "    if there is only one window
 set cmdheight=2                 " use a status bar that is 2 rows high
 " }}}
@@ -297,10 +296,6 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 nnoremap <silent> <leader>c /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
 " }}}
 
-" Extra user or machine specific settings {{{
-source ~/.vim/user.vim
-" }}}
-
 " Creating underline/overline headings for markup languages
 " Inspired by http://sphinx.pocoo.org/rest.html#sections
 nnoremap <leader>1 yyPVr=jyypVr=
@@ -311,40 +306,12 @@ nnoremap <leader>5 yypVr^
 nnoremap <leader>6 yypVr"
 
 " Powerline configuration ------------------------------------------------- {{{
+set rtp+=/lib/python3.4/site-packages/powerline/bindings/vim
 
 let g:Powerline_symbols = 'compatible'
 "let g:Powerline_symbols = 'fancy'
 
+set laststatus=2        " Always display the statusline in all windows
+set showtabline=2       " Always display the tabline, even if there is only one tab
+set noshowmode          " Hide the default mode text (e.g. -- INSERT -- below the statusline)
 " }}}
-
-" Python mode configuration ----------------------------------------------- {{{
-
-" Don't run pylint on every save
-let g:pymode = 1
-let g:pymode_breakpoint = 0
-let g:pymode_breakpoint_bind = '<leader>b'
-let g:pymode_doc = 0
-let g:pymode_doc_bind = 'K'
-let g:pymode_folding = 0
-let g:pymode_indent = 0
-let g:pymode_lint = 0
-let g:pymode_lint_checkers = ['pyflakes', 'pep8', 'mccabe']
-let g:pymode_lint_cwindow = 1
-let g:pymode_lint_ignore = ''
-let g:pymode_lint_message = 1
-let g:pymode_lint_on_fly = 0
-let g:pymode_lint_on_write = 0
-let g:pymode_lint_select = ''
-let g:pymode_lint_signs = 1
-let g:pymode_motion = 0
-let g:pymode_options = 0
-let g:pymode_paths = []
-let g:pymode_quickfix_maxheight = 6
-let g:pymode_quickfix_minheight = 3
-let g:pymode_rope = 0
-let g:pymode_run = 0
-let g:pymode_run_bind = '<leader>r'
-let g:pymode_trim_whitespaces = 0
-
-" }}}
-
