@@ -1,1 +1,5 @@
-eval $(ssh-agent)
+#
+# ~/.bash_profile
+#
+
+[[ -f ~/.bashrc ]] && . ~/.bashrc
