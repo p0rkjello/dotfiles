@@ -1,3 +1,5 @@
 [user]
 	name = p0rkjello
 	email = asbounds@gmail.com
+[color]
+	ui = true
