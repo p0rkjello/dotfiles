@@ -1,9 +1,4 @@
-# ~/.bash_profile
-
-# Git aware prompt
-export GITAWAREPROMPT=~/.bash/git-aware-prompt
-source $GITAWAREPROMPT/main.sh
-export PS1="\u@\h \w \[$txtcyn\]\$git_branch\[$txtred\]\$git_dirty\[$txtrst\]\$ "
-
-# ~/.bashrc
+[[ -z "$PS1" ]] && return
 [[ -f ~/.bashrc ]] && . ~/.bashrc
+
+eval $(keychain --eval --agents ssh $HOME/.ssh/id_p0rkjello $HOME/.ssh/id_github)

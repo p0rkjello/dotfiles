@@ -306,12 +306,12 @@ nnoremap <leader>5 yypVr^
 nnoremap <leader>6 yypVr"
 
 " Powerline configuration ------------------------------------------------- {{{
-set rtp+=/lib/python3.4/site-packages/powerline/bindings/vim
+"set rtp+=/lib/python3.4/site-packages/powerline/bindings/vim
 
-let g:Powerline_symbols = 'compatible'
+"let g:Powerline_symbols = 'compatible'
 "let g:Powerline_symbols = 'fancy'
 
-set laststatus=2        " Always display the statusline in all windows
-set showtabline=2       " Always display the tabline, even if there is only one tab
-set noshowmode          " Hide the default mode text (e.g. -- INSERT -- below the statusline)
+"set laststatus=2        " Always display the statusline in all windows
+"set showtabline=2       " Always display the tabline, even if there is only one tab
+"set noshowmode          " Hide the default mode text (e.g. -- INSERT -- below the statusline)
 " }}}

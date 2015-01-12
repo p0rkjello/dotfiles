@@ -1,25 +1,20 @@
-# ~/.bashrc
-
-# If not running interactively, don't do anything
-[[ $- != *i* ]] && return
-
-eval $(ssh-agent)
-
 # environment variables
 export EDITOR="$(if [[ -n $DISPLAY ]]; then echo 'gedit'; else echo 'nano'; fi)"	# gedit, nano
+PATH="`ruby -e 'print Gem.user_dir'`/bin:$PATH"
+
+# Better history
+export HISTCONTROL=ignoreboth
+export HISTSIZE=1000
+export HISTIGNORE="ls:pwd:exit"
 
 # Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
 if [ -f ~/.bash_aliases ]; then
   . ~/.bash_aliases
 fi
 
 # Powerline
 if [ -f /usr/lib/python3.4/site-packages/powerline/bindings/bash/powerline.sh ]; then
-	powerline-daemon -q
+	powerline-daemon -q 
 	POWERLINE_BASH_CONTINUATION=1
 	POWERLINE_BASH_SELECT=1
 	source /usr/lib/python3.4/site-packages/powerline/bindings/bash/powerline.sh
