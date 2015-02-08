@@ -1,24 +1,41 @@
+# Source global definitions
+[[ -f /etc/bash.bashrc ]] && . /etc/bash.bashrc
+
+export PATH=$PATH:/vagrant/bin
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+HISTIGNORE="ls:pwd:exit"
+
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+#shopt -s globstar
+
 # environment variables
-export EDITOR="$(if [[ -n $DISPLAY ]]; then echo 'gedit'; else echo 'nano'; fi)"	# gedit, nano
+export EDITOR="$(if [[ -n $DISPLAY ]]; then echo 'gedit'; else echo 'vim'; fi)"	# gedit, vim
 PATH="`ruby -e 'print Gem.user_dir'`/bin:$PATH"
 
-# Better history
-export HISTCONTROL=ignoreboth
-export HISTSIZE=1000
-export HISTIGNORE="ls:pwd:exit"
+# Powerline
+POWERPATH="/usr/lib/python3.4/site-packages"
+if [[ -f $POWERPATH/powerline/bindings/bash/powerline.sh ]]; then
+  powerline-daemon -q 
+  POWERLINE_BASH_CONTINUATION=1
+  POWERLINE_BASH_SELECT=1
+  . "$POWERPATH"/powerline/bindings/bash/powerline.sh
+fi
 
 # Alias definitions.
-if [ -f ~/.bash_aliases ]; then
-  . ~/.bash_aliases
-fi
+[[ -f ~/.aliases ]] && . ~/.aliases
 
-# Powerline
-if [ -f /usr/lib/python3.4/site-packages/powerline/bindings/bash/powerline.sh ]; then
-	powerline-daemon -q 
-	POWERLINE_BASH_CONTINUATION=1
-	POWERLINE_BASH_SELECT=1
-	source /usr/lib/python3.4/site-packages/powerline/bindings/bash/powerline.sh
-fi
+alias reload!='. ~/bashrc'
 
 # Enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then

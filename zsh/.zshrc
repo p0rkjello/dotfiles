@@ -65,6 +65,8 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
+alias reload!='. ~/zshrc'
+
 # Load powerline
 if [[ -r /usr/share/zsh/site-contrib/powerline.zsh ]]; then
     source /usr/share/zsh/site-contrib/powerline.zsh
