@@ -7,9 +7,9 @@
 
 # environment variables
 export EDITOR="$(if [[ -n $DISPLAY ]]; then echo 'gedit'; else echo 'vim'; fi)"	# gedit, vim
-PATH="`ruby -e 'print Gem.user_dir'`/bin:$PATH"
-export PATH=$PATH:/vagrant/bin
 
+export PATH=$PATH:/vagrant/bin
+PATH="`ruby -e 'print Gem.user_dir'`/bin:$PATH"
 
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob;
@@ -34,7 +34,6 @@ HISTFILESIZE=2000
 HISTIGNORE="ls:pwd:exit"
 
 
-
 # bash_prompt.
 [[ -f ~/.bash_prompt ]] && . ~/.bash_prompt
 
@@ -53,3 +52,6 @@ if [ -x /usr/bin/dircolors ]; then
   alias egrep='egrep --color=auto'
   alias pacman="pacman --color=auto"
 fi
+
+# SSH Keychain
+eval $(keychain --eval --agents ssh $HOME/.ssh/id_p0rkjello $HOME/.ssh/id_github $HOME/.ssh/id_rsa.bastard.ville)

@@ -1,4 +1,6 @@
-[[ -z "$PS1" ]] && return
-[[ -f ~/.bashrc ]] && . ~/.bashrc
+#!/bin/bash
 
-eval $(keychain --eval --agents ssh $HOME/.ssh/id_p0rkjello $HOME/.ssh/id_github $HOME/.ssh/id_rsa.bastard.ville)
+# bash_profile
+
+[[ -z $PS1 ]] && return
+[[ -f ~/.bashrc ]] && . ~/.bashrc
