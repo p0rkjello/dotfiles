@@ -2,14 +2,17 @@
 
 # bashrc
 
+
 # Source global definitions
 [[ -f /etc/bash.bashrc ]] && . /etc/bash.bashrc
 
 # environment variables
-export EDITOR="$(if [[ -n $DISPLAY ]]; then echo 'gedit'; else echo 'vim'; fi)"	# gedit, vim
-
+export EDITOR='vim'
 export PATH=$PATH:/vagrant/bin
 PATH="`ruby -e 'print Gem.user_dir'`/bin:$PATH"
+
+# Turn on checkwinsize
+shopt -s checkwinsize
 
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob;
@@ -33,25 +36,20 @@ HISTSIZE=1000
 HISTFILESIZE=2000
 HISTIGNORE="ls:pwd:exit"
 
+# Enable color support
+if [ -x /usr/bin/dircolors ]; then
+  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+fi
 
+# load support configs
 # bash_prompt.
 [[ -f ~/.bash_prompt ]] && . ~/.bash_prompt
 
-# Alias definitions.
+# bash_aliases.
 [[ -f ~/.bash_aliases ]] && . ~/.bash_aliases
 
-# Enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-  alias ls='ls --color=auto'
-  #alias dir='dir --color=auto'
-  #alias vdir='vdir --color=auto'
+# bash_arch.
+[[ -f ~/.bash_archlinux ]] && . ~/.bash_archlinux
 
-  alias grep='grep --color=auto'
-  alias fgrep='fgrep --color=auto'
-  alias egrep='egrep --color=auto'
-  alias pacman="pacman --color=auto"
-fi
-
-# SSH Keychain
-eval $(keychain --eval --agents ssh $HOME/.ssh/id_p0rkjello $HOME/.ssh/id_github $HOME/.ssh/id_rsa.bastard.ville)
+# SSH keychain
+[[ -f ~/.bash_keychain ]] && . ~/.bash_keychain
