@@ -3,13 +3,14 @@ dotfiles
 
 dotfiles sourced from various locations.
 
-clone the repository then either create a symlink or use [STOW](http://www.gnu.org/software/stow/manual/stow.html).
+Clone the repository then either create symlinks or use [STOW](http://www.gnu.org/software/stow/manual/stow.html).
 
-### symlink
+### symlink example
 
     $  ln -s dotfiles/bash/.bashrc
+    $  ln -s dotfiles/bash/.bash_profile
 
-### stow
+### stow example
 
     $  cd dotfiles
     $  stow bash
