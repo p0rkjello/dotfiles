@@ -5,6 +5,9 @@
 
 #alias tmux="tmux -u2 attach || tmux -u2 new"
 
+# Allow passing aliases to sudo
+alias sudo='sudo '
+
 # PS
 alias psa="ps aux"
 alias psg="ps aux | grep "
