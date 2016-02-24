@@ -7,7 +7,7 @@
 [[ -f /etc/bash.bashrc ]] && . /etc/bash.bashrc
 
 # environment variables
-export EDITOR='vim'
+export EDITOR='nano'
 export PATH=$PATH:/vagrant/bin
 PATH="`ruby -e 'print Gem.user_dir'`/bin:$PATH"
 

@@ -1,49 +1,173 @@
-colorscheme hemisu
-"colorscheme noctu
+" Colors {{{
+syntax enable           " enable syntax processing
+colorscheme badwolf
+" }}}
+" Misc {{{
+set ttyfast                     " faster redraw
+set backspace=indent,eol,start
+" }}}
+" Spaces & Tabs {{{
+set tabstop=4           " 4 space tab
+set expandtab           " use spaces for tabs
+set softtabstop=4       " 4 space tab
+set shiftwidth=4
+set modelines=1
+filetype indent on
+filetype plugin on
+set autoindent
+" }}}
+" UI Layout {{{
+set number              " show line numbers
+set showcmd             " show command in bottom bar
+set nocursorline          " highlight current line
+set wildmenu
+"set lazyredraw
+set showmatch           " higlight matching parenthesis
+" }}}
+" Searching {{{
+set ignorecase          " ignore case when searching
+set incsearch           " search as characters are entered
+set hlsearch            " highlight all matches
+" }}}
+" Folding {{{
+"=== folding ===
+set foldmethod=indent   " fold based on indent level
+set foldnestmax=10      " max 10 depth
+set foldenable          " don't fold files by default on open
+nnoremap <space> za
+set foldlevelstart=10    " start with fold level of 1
+" }}}
+" Line Shortcuts {{{
+nnoremap j gj
+nnoremap k gk
+nnoremap B ^
+nnoremap E $
+nnoremap $ <nop>
+nnoremap ^ <nop>
+nnoremap gV `[v`]
+onoremap an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
+xnoremap an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
+onoremap in :<c-u>call <SID>NextTextObject('i', 'f')<cr>
+xnoremap in :<c-u>call <SID>NextTextObject('i', 'f')<cr>
+ 
+onoremap al :<c-u>call <SID>NextTextObject('a', 'F')<cr>
+xnoremap al :<c-u>call <SID>NextTextObject('a', 'F')<cr>
+onoremap il :<c-u>call <SID>NextTextObject('i', 'F')<cr>
+xnoremap il :<c-u>call <SID>NextTextObject('i', 'F')<cr>
+" }}}
+" Leader Shortcuts {{{
+let mapleader=","
+nnoremap <leader>m :silent make\|redraw!\|cw<CR>
+nnoremap <leader>w :NERDTree<CR>
+nnoremap <leader>u :GundoToggle<CR>
+nnoremap <leader>h :A<CR>
+nnoremap <leader>ev :vsp $MYVIMRC<CR>
+nnoremap <leader>ez :vsp ~/.zshrc<CR>
+nnoremap <leader>sv :source $MYVIMRC<CR>
+nnoremap <leader>l :call ToggleNumber()<CR>
+nnoremap <leader><space> :noh<CR>
+nnoremap <leader>s :mksession<CR>
+nnoremap <leader>a :Ag 
+nnoremap <leader>c :SyntasticCheck<CR>:Errors<CR>
+nnoremap <leader>1 :set number!<CR>
+nnoremap <leader>d :Make! 
+nnoremap <leader>r :call RunTestFile()<CR>
+nnoremap <leader>g :call RunGoFile()<CR>
+vnoremap <leader>y "+y
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
+inoremap jk <esc>
+" }}}
+" CtrlP {{{
+let g:ctrlp_match_window = 'bottom,order:ttb'
+let g:ctrlp_switch_buffer = 0
+let g:ctrlp_working_path_mode = 0
+let g:ctrlp_custom_ignore = '\vbuild/|dist/|venv/|target/|\.(o|swp|pyc|egg)$'
+" }}}
+" NERDTree {{{
+let NERDTreeIgnore = ['\.pyc$', 'build', 'venv', 'egg', 'egg-info/', 'dist', 'docs']
+" }}}
+" Syntastic {{{
+let g:syntastic_python_flake8_args='--ignore=E501'
+let g:syntastic_ignore_files = ['.java$']
+" }}}
+" Tmux {{{
+if exists('$TMUX') " allows cursor change in tmux mode
+    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+else
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+endif
+" }}}
+" AutoGroups {{{
+augroup configgroup
+    autocmd!
+    autocmd VimEnter * highlight clear SignColumn
+    autocmd BufWritePre *.php,*.py,*.js,*.txt,*.hs,*.java,*.md,*.rb :call <SID>StripTrailingWhitespaces()
+    autocmd BufEnter *.cls setlocal filetype=java
+    autocmd BufEnter *.zsh-theme setlocal filetype=zsh
+    autocmd BufEnter Makefile setlocal noexpandtab
+    autocmd BufEnter *.sh setlocal tabstop=2
+    autocmd BufEnter *.sh setlocal shiftwidth=2
+    autocmd BufEnter *.sh setlocal softtabstop=2
+augroup END
+" }}}
+" Backups {{{
+set backup 
+set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp 
+set backupskip=/tmp/*,/private/tmp/* 
+set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp 
+set writebackup
+" }}}
+" Custom Functions {{{
+function! ToggleNumber()
+    if(&relativenumber == 1)
+        set norelativenumber
+        set number
+    else
+        set relativenumber
+    endif
+endfunction
 
-syntax on
-set background=dark
+" strips trailing whitespace at the end of files. this
+" is called on buffer write in the autogroup above.
+function! <SID>StripTrailingWhitespaces()
+    " save last search & cursor position
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    let @/=_s
+    call cursor(l, c)
+endfunction
 
-set nocompatible			" be iMproved, required
-filetype off					" required
+function! <SID>CleanFile()
+    " Preparation: save last search, and cursor position.
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    " Do the business:
+    %!git stripspace
+    " Clean up: restore previous search history, and cursor position
+    let @/=_s
+    call cursor(l, c)
+endfunction
+ 
+function! s:NextTextObject(motion, dir)
+  let c = nr2char(getchar())
+ 
+  if c ==# "b"
+      let c = "("
+  elseif c ==# "B"
+      let c = "{"
+  elseif c ==# "r"
+      let c = "["
+  endif
+ 
+  exe "normal! ".a:dir.c."v".a:motion.c
+endfunction
+" }}}
 
-set rtp+=/usr/lib/python3.4/site-packages/powerline/bindings/vim
-let g:Powerline_symbols = 'compatible'
-
-set laststatus=2			" Always display the statusline in all windows
-set showtabline=2   	" Always display the tabline, even if there is only one tab
-set noshowmode      	" Hide the default mode text (e.g. -- INSERT -- below the statusline)
-
-set encoding=utf-8
-
-set nowrap						" don't wrap lines
-set tabstop=2					" a tab is four spaces
-set autoindent				" always set autoindenting on
-set copyindent				" copy the previous indentation on autoindenting
-"set number						" always show line numbers
-set shiftwidth=2			" number of spaces to use for autoindenting
-set shiftround				" use multiple of shiftwidth when indenting with '<' and '>'
-set showmatch					" set show matching parenthesis
-set ignorecase				" ignore case when searching
-set smartcase					" ignore case if search pattern is all lowercase,
-											"    case-sensitive otherwise
-set smarttab					" insert tabs on the start of a line according to
-											"    shiftwidth, not tabstop
-set hlsearch					" highlight search terms
-set incsearch					" show search matches as you typei
-
-set history=1000			" remember more commands and search history
-set undolevels=1000		" use many muchos levels of undo
-set wildignore=*.swp,*.bak,*.pyc,*.class
-set title							" change the terminal's title
-set visualbell				" don't beep
-set noerrorbells			" don't beep
-
-set nobackup
-set noswapfile
-
-filetype plugin indent on
-
-set pastetoggle=<F2>
-set mouse=a
+" vim:foldmethod=marker:foldlevel=0
 
