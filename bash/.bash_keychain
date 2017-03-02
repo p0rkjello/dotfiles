@@ -4,4 +4,4 @@
 
 
 # Load SSH Keychain
-eval $(keychain --eval --agents ssh $HOME/.ssh/id_p0rkjello $HOME/.ssh/id_github $HOME/.ssh/id_rsa.bastard.ville)
+eval $(keychain --eval --agents ssh $HOME/.ssh/id_p0rkjello@drone-2 $HOME/.ssh/id_github $HOME/.ssh/id_rsa.bastard.ville)
