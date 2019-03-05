@@ -3,5 +3,10 @@
 	email = asbounds@gmail.com
 [color]
 	ui = true
+	status = always
 [push]
 	default = simple
+[core]
+	eol = lf
+	autocrlf = input
+	whitespace = trailing-space,space-before-tab

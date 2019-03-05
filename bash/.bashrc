@@ -7,9 +7,7 @@
 [[ -f /etc/bash.bashrc ]] && . /etc/bash.bashrc
 
 # environment variables
-export EDITOR='nano'
-export PATH=$PATH:/vagrant/bin
-PATH="`ruby -e 'print Gem.user_dir'`/bin:$PATH"
+export EDITOR='vi'
 
 # Turn on checkwinsize
 shopt -s checkwinsize
@@ -48,8 +46,3 @@ fi
 # bash_aliases.
 [[ -f ~/.bash_aliases ]] && . ~/.bash_aliases
 
-# bash_arch.
-[[ -f ~/.bash_archlinux ]] && . ~/.bash_archlinux
-
-# SSH keychain
-[[ -f ~/.bash_keychain ]] && . ~/.bash_keychain
